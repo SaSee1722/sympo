@@ -2,12 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/ssec-emblem.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="INTERO FEST '26 — National Level Technical Symposium at Sree Sakthi Engineering College, Karamadai, Coimbatore. October 31, 2026. Events: Prompt-X 2.0, Design-Xpo, and ClueX. Innovate. Integrate. Inspire." />
     <meta name="keywords" content="INTERO FEST 26, Sree Sakthi Engineering College, Symposium, Prompt-X 2.0, Design-Xpo, ClueX, AI Image Generation, UI UX Design, Technical Symposium, Coimbatore, Karamadai" />
     <meta name="theme-color" content="#090A10" />
     <title>INTERO FEST '26 — Prompt-X 2.0 | Design-Xpo | ClueX | Sree Sakthi Engineering College</title>
+
+    <!-- Theme Preference Initialization (Prevents theme flash on reload) -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('sympo-theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = (saved === 'dark' || saved === 'light') ? saved : (prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+          var metaTheme = document.querySelector('meta[name="theme-color"]');
+          if (metaTheme) {
+            metaTheme.setAttribute('content', theme === 'dark' ? '#090A10' : '#FBF9F5');
+          }
+        } catch (e) {}
+      })();
+    </script>
 
     <!-- Open Graph -->
     <meta property="og:title" content="INTERO FEST '26 — National Level Technical Symposium" />

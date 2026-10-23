@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import CollegeLogo from './CollegeLogo';
+import ThemeToggle from './ThemeToggle';
 import { symposiumMeta } from '../data/symposium';
 
 export default function Navbar() {
@@ -37,14 +38,15 @@ export default function Navbar() {
       <div className="container navbar-container">
         {/* College Logo & INTERO FEST '26 Branding */}
         <Link to="/" className="navbar-brand" onClick={closeMenu} aria-label="INTERO FEST '26 Home">
-          <CollegeLogo size={36} />
+          <CollegeLogo size={46} variant="full" />
+          <div className="navbar-brand-divider" aria-hidden="true" />
           <div className="brand-meta">
             <span className="brand-title">{symposiumMeta.shortName}</span>
-            <span className="brand-subtitle">{symposiumMeta.institution}</span>
+            <span className="brand-subtitle">{symposiumMeta.department}</span>
           </div>
         </Link>
 
-        {/* Desktop Navigation: Events, About, Venue, Register */}
+        {/* Desktop Navigation: Events, About, Venue, ThemeToggle, Register */}
         <nav className="nav-links-desktop" aria-label="Main Navigation">
           <a
             href="/#events"
@@ -70,6 +72,8 @@ export default function Navbar() {
             Venue
           </a>
 
+          <ThemeToggle />
+
           <a
             href="/#register"
             onClick={(e) => scrollToSection(e, 'register')}
@@ -79,15 +83,18 @@ export default function Navbar() {
           </a>
         </nav>
 
-        {/* Mobile Hamburger Toggle */}
-        <button
-          className="mobile-menu-btn"
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
-          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={mobileMenuOpen}
-        >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        {/* Mobile Header Actions: Compact ThemeToggle + Hamburger */}
+        <div className="mobile-header-actions">
+          <ThemeToggle compact />
+          <button
+            className="mobile-menu-btn"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer */}
@@ -115,6 +122,10 @@ export default function Navbar() {
             >
               Venue & Contact
             </a>
+
+            <div style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+              <ThemeToggle />
+            </div>
 
             <a
               href="/#register"

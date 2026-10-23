@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Calendar, MapPin, Ticket, Users, Award } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Ticket, Sparkles, Layout, Puzzle, Trophy } from 'lucide-react';
+import CseDeptLogo from './CseDeptLogo';
+import HeroCanvas from './HeroCanvas';
+import CountdownTimer from './CountdownTimer';
 import { symposiumMeta } from '../data/symposium';
 
 export default function AnimatedHero() {
   const shouldReduceMotion = useReducedMotion();
+  const [canvasMode, setCanvasMode] = useState('all');
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -26,56 +30,172 @@ export default function AnimatedHero() {
     }
   };
 
+  const events = [
+    {
+      id: 'promptx',
+      title: 'Prompt-X 2.0',
+      tagline: 'Generative AI & Neural Synthesis',
+      icon: Sparkles,
+      colorClass: 'px',
+      link: '/events/promptx',
+      badge: 'Technical',
+      accentLabel: 'AI Latent Mesh Active',
+    },
+    {
+      id: 'designxpo',
+      title: 'Design-Xpo',
+      tagline: 'UI/UX & Product Design Matrix',
+      icon: Layout,
+      colorClass: 'dx',
+      link: '/events/designxpo',
+      badge: 'Technical',
+      accentLabel: 'Vector Wireframe Active',
+    },
+    {
+      id: 'cluex',
+      title: 'ClueX',
+      tagline: 'Campus Cipher & Treasure Hunt',
+      icon: Puzzle,
+      colorClass: 'cx',
+      link: '/events/cluex',
+      badge: 'Non-Technical',
+      accentLabel: 'Sonar Radar Active',
+    },
+  ];
+
   return (
     <section className="hero-section" id="hero">
-      <div className="container">
+      {/* 1. Interactive Event-Themed Particle & Canvas Background */}
+      <HeroCanvas activeEvent={canvasMode} />
+
+      {/* Ambient Radial Glowing Orbs */}
+      <div className={`hero-ambient-glow glow-${canvasMode}`} aria-hidden="true" />
+
+      <div className="container hero-container-relative">
         <motion.div
-          className="hero-concise-content"
+          className="hero-main-content"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {/* Eyebrow: College & Department */}
+          {/* Eyebrow: Department of CSE with Phoenix Crest */}
           <motion.div variants={itemVariants} className="hero-eyebrow">
-            <span className="editorial-badge">
-              <span className="badge-dot" />
-              {symposiumMeta.institution} • {symposiumMeta.department}
-            </span>
+            <div className="hero-dept-badge">
+              <CseDeptLogo size={24} />
+              <span className="hero-dept-text">Department of Computer Science &amp; Engineering</span>
+            </div>
           </motion.div>
 
-          {/* Symposium Name */}
+          {/* Symposium Name / Big Title Lockup */}
           <motion.h1 variants={itemVariants} className="hero-main-title">
-            INTERO FEST <span className="title-year">’26</span>
+            <span className="title-intero">INTERO FEST</span>{' '}
+            <span className="title-year">’26</span>
           </motion.h1>
 
-          {/* One-Line Tagline */}
+          {/* Tagline */}
           <motion.p variants={itemVariants} className="hero-tagline">
-            {symposiumMeta.tagline}
+            One-Day National Level Technical Symposium
           </motion.p>
 
-          {/* Quick Date & Venue Meta */}
-          <motion.div variants={itemVariants} className="hero-meta-strip">
-            <div className="meta-pill">
-              <Calendar size={15} className="meta-icon" />
-              <span>{symposiumMeta.date}</span>
-            </div>
-            <span className="meta-divider">•</span>
-            <div className="meta-pill">
-              <MapPin size={15} className="meta-icon" />
-              <span>{symposiumMeta.venue.address}</span>
-            </div>
+          <motion.p variants={itemVariants} className="hero-subtext">
+            Three premier arenas spanning generative artificial intelligence, product design, and strategic campus cipher hunting. One unified pass unlocks full symposium access.
+          </motion.p>
+
+          {/* Live Real-time Countdown to Event */}
+          <motion.div variants={itemVariants} className="hero-countdown-container">
+            <CountdownTimer targetDate="2026-10-31T09:00:00+05:30" />
           </motion.div>
 
-          {/* One Primary CTA */}
+          {/* Primary Action Buttons */}
           <motion.div variants={itemVariants} className="hero-cta-wrapper">
             <a href="#register" className="btn btn-primary btn-hero">
+              <Ticket size={18} />
               <span>Register for Symposium — {symposiumMeta.fee}</span>
               <ArrowRight size={18} />
             </a>
+
+            <a href="#events" className="btn btn-secondary btn-hero-secondary">
+              <Sparkles size={16} />
+              <span>Explore 3 Arenas</span>
+            </a>
+          </motion.div>
+
+          {/* Interactive 3-Event Quick Track Showcase with Dynamic Background Switching */}
+          <motion.div variants={itemVariants} className="hero-events-showcase">
+            <div className="hero-showcase-header">
+              <span className="hero-showcase-label">INTERACTIVE ARENA MODES</span>
+              
+              {/* Event Background Mode Switcher */}
+              <div className="hero-mode-pills" role="tablist" aria-label="Event Backdrop Modes">
+                <button
+                  type="button"
+                  className={`hero-mode-pill ${canvasMode === 'all' ? 'active' : ''}`}
+                  onClick={() => setCanvasMode('all')}
+                  title="Show all three event backdrops blended"
+                >
+                  All Arenas
+                </button>
+                <button
+                  type="button"
+                  className={`hero-mode-pill px ${canvasMode === 'promptx' ? 'active' : ''}`}
+                  onClick={() => setCanvasMode('promptx')}
+                  title="Switch background to AI Neural Synaptic Mesh"
+                >
+                  <Sparkles size={12} />
+                  Prompt-X (AI)
+                </button>
+                <button
+                  type="button"
+                  className={`hero-mode-pill dx ${canvasMode === 'designxpo' ? 'active' : ''}`}
+                  onClick={() => setCanvasMode('designxpo')}
+                  title="Switch background to Vector Wireframe Blueprint"
+                >
+                  <Layout size={12} />
+                  Design-Xpo (UX)
+                </button>
+                <button
+                  type="button"
+                  className={`hero-mode-pill cx ${canvasMode === 'cluex' ? 'active' : ''}`}
+                  onClick={() => setCanvasMode('cluex')}
+                  title="Switch background to Sonar Radar & Cryptic Map"
+                >
+                  <Puzzle size={12} />
+                  ClueX (Hunt)
+                </button>
+              </div>
+            </div>
+
+            <div className="hero-events-grid">
+              {events.map((ev) => {
+                const Icon = ev.icon;
+                const isHovered = canvasMode === ev.id;
+                return (
+                  <a
+                    key={ev.id}
+                    href={ev.link}
+                    className={`hero-event-chip ${ev.colorClass} ${isHovered ? 'hovered-chip' : ''}`}
+                    onMouseEnter={() => setCanvasMode(ev.id)}
+                    onMouseLeave={() => setCanvasMode('all')}
+                  >
+                    <div className="chip-icon-box">
+                      <Icon size={18} />
+                    </div>
+                    <div className="chip-content">
+                      <div className="chip-header">
+                        <strong className="chip-title">{ev.title}</strong>
+                        <span className="chip-badge">{ev.badge}</span>
+                      </div>
+                      <span className="chip-tagline">{ev.tagline}</span>
+                    </div>
+                    <ArrowRight size={15} className="chip-arrow" />
+                  </a>
+                );
+              })}
+            </div>
           </motion.div>
         </motion.div>
 
-        {/* Compact Event-Information Row */}
+        {/* 4-Item Compact Event-Information Row */}
         <motion.div
           className="event-info-strip"
           initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
@@ -88,7 +208,7 @@ export default function AnimatedHero() {
               <Calendar size={20} />
             </div>
             <div className="info-card-content">
-              <span className="info-card-label">Date</span>
+              <span className="info-card-label">Event Date</span>
               <strong className="info-card-value">{symposiumMeta.date}</strong>
               <span className="info-card-desc">One-Day National Symposium</span>
             </div>
@@ -100,9 +220,9 @@ export default function AnimatedHero() {
               <MapPin size={20} />
             </div>
             <div className="info-card-content">
-              <span className="info-card-label">Venue</span>
+              <span className="info-card-label">Campus Venue</span>
               <strong className="info-card-value">Sree Sakthi Engg. College</strong>
-              <span className="info-card-desc">{symposiumMeta.venue.address}</span>
+              <span className="info-card-desc">Karamadai, Coimbatore</span>
             </div>
           </div>
 
@@ -112,21 +232,21 @@ export default function AnimatedHero() {
               <Ticket size={20} />
             </div>
             <div className="info-card-content">
-              <span className="info-card-label">Registration Fee</span>
+              <span className="info-card-label">All-Access Fee</span>
               <strong className="info-card-value highlight-text">{symposiumMeta.fee}</strong>
-              <span className="info-card-desc">All-Access Symposium Entry</span>
+              <span className="info-card-desc">Includes All 3 Events &amp; Kit</span>
             </div>
           </div>
 
           {/* 4. Participation Format & Perks */}
           <div className="info-strip-card">
             <div className="info-card-icon">
-              <Users size={20} />
+              <Trophy size={20} />
             </div>
             <div className="info-card-content">
-              <span className="info-card-label">Participation</span>
-              <strong className="info-card-value">{symposiumMeta.participation}</strong>
-              <span className="info-card-desc">Prize Pool &amp; Certificates</span>
+              <span className="info-card-label">Prize Pool &amp; Perks</span>
+              <strong className="info-card-value">Certificates &amp; Awards</strong>
+              <span className="info-card-desc">For All Registered Attendees</span>
             </div>
           </div>
         </motion.div>

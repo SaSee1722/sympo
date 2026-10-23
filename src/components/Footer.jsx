@@ -16,10 +16,11 @@ export default function Footer() {
           {/* Brand info */}
           <div className="footer-brand-col">
             <div className="footer-brand-lockup">
-              <CollegeLogo size={32} />
+              <CollegeLogo size={44} variant="full" />
+              <div className="navbar-brand-divider" aria-hidden="true" style={{ height: '30px' }} />
               <div>
                 <strong className="footer-brand-name">{symposiumMeta.name}</strong>
-                <span className="footer-brand-inst">{symposiumMeta.institution}</span>
+                <span className="footer-brand-inst">{symposiumMeta.department}</span>
               </div>
             </div>
             <p className="footer-tagline">
